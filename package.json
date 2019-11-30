@@ -1,0 +1,19 @@
+{
+  "name": "bargain-basement-service",
+  "version": "0.0.1",
+  "description": "RESTful backend webservice",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndrewRedican/bargain-basement-service.git"
+  },
+  "author": "andrew.redican.mejia@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AndrewRedican/bargain-basement-service/issues"
+  },
+  "homepage": "https://github.com/AndrewRedican/bargain-basement-service#readme"
+}
