@@ -1,11 +1,11 @@
-const err = require('../core_modules/err')
+const err = require('../core/err')
 
+/**
+ * Function designed to validate firebase database request params
+ * @param {string} path
+ * @param {any} data
+ */
 const validate = {
-  /**
-   * Function designed to validate firebase database request params
-   * @param {string} path
-   * @param {any} data
-   */
   eval: (...args) => {
     if (args.length < 2)
       throw Error('@validate(): Expected to contain at least one argument')
