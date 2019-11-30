@@ -1,8 +1,10 @@
-const { pubsub, https, config, database } = require('firebase-functions')
+const functions = require('firebase-functions')
 const { initializeFirebaseAdmin } = require('./databaseAccess')
+const server = require('./src/server')
+const api = functions
+  .runWith({ memory: '128MB', timeoutSeconds: 3 })
+  .https.onRequest(server)
 
 initializeFirebaseAdmin()
 
-exports.helloWorld = https.onRequest((request, response) => {
-  response.send('Hello from Firebase!')
-})
+module.exports = { api }

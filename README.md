@@ -24,9 +24,13 @@ Product listings - https://product-service.herokuapp.com/api/v1/products Product
 
 ### Getting Started
 
-#### Running project locally:
+### Project Setup
 
-Work in progress.
+1. Run `npm install -g firebase-tools`
+
+### Deploy Cloud Functions
+
+1. Run `firebase deploy --only functions`
 
 ### Testing
 

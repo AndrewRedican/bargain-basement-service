@@ -1,10 +1,15 @@
 const admin = require('firebase-admin')
 const validate = require('./validate')
 
+var serviceAccount = require('./serviceAccountKey.json')
+
 let db
 
 exports.initializeFirebaseAdmin = () => {
-  admin.initializeApp()
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: 'https://bargain-basement.firebaseio.com'
+  })
   db = admin.database()
 }
 
