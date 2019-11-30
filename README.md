@@ -17,7 +17,7 @@
   - Name
   - Description
   - Products (one or more) o Price (total of product prices)
-- [ ] The API is protected by basic authentication, user the username user and password pass for access.
+- [x] The API is protected by basic authentication, user the username user and password pass for access.
 
 Example
 Product listings - https://product-service.herokuapp.com/api/v1/products Product details - https://product-service.herokuapp.com/api/v1/products/{id}
