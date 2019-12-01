@@ -14,8 +14,6 @@ app
   .use(express.urlencoded({ extended: false }))
   .use('/products', require('./apis/products/route'))
   .use('/packages', require('./apis/packages/route'))
-  .get('*', (_, res) =>
-    res.status(404).json({ success: false, data: 'Endpoint not found' })
-  )
+  .get('*', (_, res) => res.status(404).json({ data: 'Endpoint not found' }))
 
 module.exports = app
