@@ -30,11 +30,9 @@ exports.addPackages = (req, res) => {
 exports.getPackage = async (req, res) => {
   let status, data, error
   try {
-    const data = await get(`packages/${req.params.id}`)
-    if (data !== null) {
-      data = data
-      status = HttpStatus.OK
-    } else {
+    data = await get(`packages/${req.params.id}`)
+    if (data !== null) status = HttpStatus.OK
+    else {
       error = `Could not find package with id #${req.params.id}`
       status = HttpStatus.NOT_FOUND
     }
@@ -42,10 +40,7 @@ exports.getPackage = async (req, res) => {
     error = err.message
     status = HttpStatus.INTERNAL_SERVER_ERROR
   }
-  return res.status(status).json({
-    data,
-    error
-  })
+  return res.status(status).json({ data, error })
 }
 
 exports.editPackage = (req, res) => {

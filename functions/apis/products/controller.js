@@ -31,22 +31,19 @@ exports.addProducts = async (req, res) => {
 }
 
 exports.getProduct = async (req, res) => {
-  let status
-  const body = {}
+  let status, data, error
   try {
-    const data = await get(`products/${req.params.id}`)
-    if (data !== null) {
-      body.data = data
-      status = HttpStatus.OK
-    } else {
-      body.error = `Could not find product with id #${req.params.id}`
+    data = await get(`products/${req.params.id}`)
+    if (data !== null) status = HttpStatus.OK
+    else {
+      error = `Could not find product with id #${req.params.id}`
       status = HttpStatus.NOT_FOUND
     }
   } catch (err) {
-    body.error = err.message
+    error = err.message
     status = HttpStatus.INTERNAL_SERVER_ERROR
   }
-  return res.status(status).json(body)
+  return res.status(status).json({ data, error })
 }
 
 exports.editProduct = (req, res) => {
