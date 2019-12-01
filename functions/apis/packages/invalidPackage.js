@@ -1,10 +1,11 @@
 const { sameStructure, getType } = require('../../core')
 const schema = require('./schema')
 
-const productSchema = require('../products/schema')
-
 const invalidProduct = product =>
-  !sameStructure(product, Object.assign({ id: 0 }, productSchema))
+  !sameStructure(
+    product,
+    Object.assign({ id: 0 }, require('../products/schema'))
+  )
 
 const invalidPackage = package => {
   if (!sameStructure(package, schema)) return true

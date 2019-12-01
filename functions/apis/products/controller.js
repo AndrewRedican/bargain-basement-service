@@ -1,6 +1,8 @@
 const HttpStatus = require('http-status-codes')
-const { get, transaction } = require('../../databaseAccess')
+const { get, transaction, write } = require('../../databaseAccess')
+const { getType, isIterable, sameType } = require('../../core')
 const invalidProduct = require('./invalidProduct')
+const schema = require('./schema')
 
 exports.getAllProducts = async (req, res) => {
   let status, data, error
@@ -21,7 +23,7 @@ exports.getAllProducts = async (req, res) => {
 exports.addProducts = async (req, res) => {
   let error
   try {
-    if (req.body && !Array.isArray(req.body))
+    if (!isIterable(req.body))
       throw new Error('_syntax:Expected list of products.')
 
     if (req.body.some(invalidProduct))
@@ -63,13 +65,35 @@ exports.getProduct = async (req, res) => {
   return res.status(status).json({ data, error })
 }
 
-exports.editProduct = (req, res) => {
-  // todo...
-  const exists = true
-  return res.status(exists ? 200 : 404).json({
-    data: {
-      process: 'editProduct',
-      targetId: req.params.id
-    }
-  })
+exports.editProduct = async (req, res) => {
+  let data, error
+  try {
+    if (getType(req.body) !== 'object' || !isIterable(req.body))
+      throw new Error(
+        '_syntax:Expected on or more properties to modify from product.'
+      )
+
+    const editKeys = Object.keys(req.body)
+
+    if (editKeys.some(key => !(key in schema)))
+      throw new Error('_syntax:Some properties do not belong to a product.')
+
+    if (editKeys.some(key => !sameType(req.body[key], schema[key])))
+      throw new Error('_syntax:Some properties do not match value type.')
+
+    data = await get(`products/${req.params.id}`)
+    if (data === null)
+      throw new Error(`Could not find product with id #${req.params.id}`)
+
+    write(`products/${req.params.id}`, { ...data, ...req.body })
+    status = HttpStatus.NO_CONTENT
+  } catch (err) {
+    error = err.message.replace('_syntax:', '')
+    status = err.message.includes('_syntax:')
+      ? HttpStatus.BAD_REQUEST
+      : err.message.includes('Could not find')
+      ? HttpStatus.NOT_FOUND
+      : HttpStatus.INTERNAL_SERVER_ERROR
+  }
+  return res.status(status).json({ error })
 }
