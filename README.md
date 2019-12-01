@@ -4,9 +4,9 @@
 
 ### Requirements
 
-- [ ] Assume for this exercise that new products can be added but never removed
+- [x] Assume for this exercise that new products can be added but never removed
 - [ ] The API must support the following:
-  - Create a package
+  - [x] Create a package
   - Retrieve a package
   - Update a package
   - Delete a package
