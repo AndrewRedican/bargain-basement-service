@@ -18,6 +18,11 @@ exports.write = (path, data) => {
   db.ref(path).set(data)
 }
 
+exports.insert = (path, data) => {
+  validate.insert(path, data)
+  return db.ref(path).push(data).key
+}
+
 exports.remove = path => {
   validate.remove(path)
   db.ref(path).remove()

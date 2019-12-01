@@ -24,6 +24,8 @@ const validate = {
 
   write: (...args) => validate.eval('write', ...args),
 
+  insert: (...args) => validate.eval('insert', ...args),
+
   remove: (...args) => validate.eval('remove', ...args),
 
   get: (...args) => validate.eval('get', ...args),

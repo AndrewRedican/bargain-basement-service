@@ -1,30 +1,38 @@
 const HttpStatus = require('http-status-codes')
-const { get } = require('../../databaseAccess')
+const { get, insert } = require('../../databaseAccess')
 
 exports.getAllProducts = async (req, res) => {
+  let status, data, success, error
+  try {
+    data = (await get('products')) || []
+    success = true
+    status = HttpStatus.OK
+  } catch (err) {
+    error = err.message
+    success = false
+    status = HttpStatus.INTERNAL_SERVER_ERROR
+  }
+  return res.status(status).json({
+    data: { ...data, count: undefined },
+    count: data.count,
+    success,
+    error
+  })
+}
+
+exports.addProducts = async (req, res) => {
   let status
   const body = {}
   try {
-    body.data = (await get('products')) || []
+    insert('products', req.body)
     body.success = true
-    status = HttpStatus.OK
+    status = HttpStatus.CREATED
   } catch (err) {
-    body.error = err.message
     body.success = false
+    body.error = err.message
     status = HttpStatus.INTERNAL_SERVER_ERROR
   }
   return res.status(status).json(body)
-}
-
-exports.addProducts = (req, res) => {
-  // todo, nothing found return empty array
-  return res.status(200).json({
-    // 200 or 204 depending if full details or not
-    success: true,
-    data: {
-      process: 'addProducts'
-    }
-  })
 }
 
 exports.getProduct = async (req, res) => {

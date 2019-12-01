@@ -1,5 +1,4 @@
 const express = require('express')
-const bodyParser = require('body-parser')
 const cors = require('cors')
 const app = express()
 const basicAuth = require('express-basic-auth')
@@ -11,8 +10,8 @@ app
     })
   )
   .use(cors({ origin: true }))
-  .use(bodyParser.json())
-  .use(bodyParser.urlencoded({ extended: false }))
+  .use(express.json())
+  .use(express.urlencoded({ extended: false }))
   .use('/products', require('./apis/products/route'))
   .use('/packages', require('./apis/packages/route'))
   .get('*', (_, res) =>

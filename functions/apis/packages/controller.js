@@ -2,18 +2,22 @@ const HttpStatus = require('http-status-codes')
 const { get } = require('../../databaseAccess')
 
 exports.getAllPackages = async (req, res) => {
-  let status
-  const body = {}
+  let status, data, success, error
   try {
-    body.data = (await get('packages')) || []
-    body.success = true
+    data = (await get('packages')) || []
+    success = true
     status = HttpStatus.OK
   } catch (err) {
     error = err.message
-    body.success = false
-    body.status = HttpStatus.INTERNAL_SERVER_ERROR
+    success = false
+    status = HttpStatus.INTERNAL_SERVER_ERROR
   }
-  return res.status(status).json(body)
+  return res.status(status).json({
+    data: { ...data, count: undefined },
+    count: data.count,
+    success,
+    error
+  })
 }
 
 exports.addPackages = (req, res) => {
