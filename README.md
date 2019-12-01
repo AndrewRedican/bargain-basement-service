@@ -17,7 +17,8 @@
   - ID
   - Name
   - Description
-  - Products (one or more) o Price (total of product prices)
+  - Products (one or more)
+  - Price (total of product prices)
 - [x] The API is protected by basic authentication, user the username user and password pass for access.
 
 Example
