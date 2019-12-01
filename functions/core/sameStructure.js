@@ -18,7 +18,9 @@ const sameStructure = (identityA, identityB) => {
     if (!(AKeyCount === BKeyCount)) return false
     if (AKeyCount === 0) return typeMatch
     for (var i = 0; i < AKeyCount; i++) {
-      if (AKeys[i] !== BKeys[i]) return false
+      if (!BKeys.includes(AKeys[i])) return false
+      if (!AKeys.includes(BKeys[i])) return false
+      if (!sameType(identityA[AKeys[i]], identityB[AKeys[i]])) return false
     }
   }
   return typeMatch
