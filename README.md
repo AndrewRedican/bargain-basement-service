@@ -11,7 +11,8 @@
   - Update a package
   - Delete a package
   - List all packages
-- [ ] I should be able to specify the currency (taking into account the current exchange rate) o API should default to USD if no currency is specified Free API services such as https://exchangeratesapi.io/ offer the ability to query existing exchange rates
+- [ ] I should be able to specify the currency (taking into account the current exchange rate)
+- [ ] API should default to USD if no currency is specified Free API services such as https://exchangeratesapi.io/ offer the ability to query existing exchange rates
 - [ ] A package should have the following attributes:
   - ID
   - Name
