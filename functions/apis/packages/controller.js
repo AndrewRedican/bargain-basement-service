@@ -98,13 +98,31 @@ exports.editPackage = async (req, res) => {
   return res.status(status).json({ error })
 }
 
-exports.removePackage = (req, res) => {
-  // todo...
-  const existed = true
-  return res.status(existed ? 204 : 404).json({
-    data: {
-      process: 'removePackage',
-      targetId: req.params.id
+exports.removePackage = async (req, res) => {
+  let data, error
+  try {
+    data = await get(`packages/${req.params.id}`)
+    if (data !== null) {
+      await transaction('packages', prevPackages => {
+        const packages = { ...prevPackages }
+        const prevCount = packages.count || 0
+        if (packages[req.params.id] === null)
+          throw new Error(
+            `Package with id #${req.params.id} has already been deleted.`
+          )
+        if (prevCount <= 0) throw new Error('There are no packages to delete.')
+        return { ...packages, [req.params.id]: null, count: prevCount - 1 }
+      })
+      status = HttpStatus.NO_CONTENT
+    } else {
+      error = `Could not find package with id #${req.params.id}`
+      status = HttpStatus.NOT_FOUND
     }
-  })
+  } catch (err) {
+    error = err.message
+    status = err.message.includes('already been deleted')
+      ? HttpStatus.GONE
+      : HttpStatus.INTERNAL_SERVER_ERROR
+  }
+  return res.status(status).json({ error })
 }
