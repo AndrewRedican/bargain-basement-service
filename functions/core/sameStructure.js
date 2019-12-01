@@ -10,7 +10,7 @@ const sameType = require('./sameType')
 const sameStructure = (identityA, identityB) => {
   const typeMatch = sameType(identityA, identityB)
   if (typeMatch === false) return false
-  if (['array', 'object'].indexOf(typeMatch) > -1) {
+  if (['array', 'object'].includes(typeMatch)) {
     const AKeys = Object.keys(identityA),
       BKeys = Object.keys(identityB),
       AKeyCount = AKeys.length,
@@ -18,6 +18,7 @@ const sameStructure = (identityA, identityB) => {
     if (!(AKeyCount === BKeyCount)) return false
     if (AKeyCount === 0) return typeMatch
     for (var i = 0; i < AKeyCount; i++) {
+      if ('array' === typeMatch) if (AKeys[i] !== BKeys[i]) return false
       if (!BKeys.includes(AKeys[i])) return false
       if (!AKeys.includes(BKeys[i])) return false
       if (!sameType(identityA[AKeys[i]], identityB[AKeys[i]])) return false
