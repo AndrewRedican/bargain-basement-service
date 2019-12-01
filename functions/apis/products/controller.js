@@ -1,8 +1,8 @@
 const HttpStatus = require('http-status-codes')
-const { get, insert } = require('../../databaseAccess')
+const { get, transaction } = require('../../databaseAccess')
 
 exports.getAllProducts = async (req, res) => {
-  let status, data, success, error
+  let status, data, error
   try {
     data = (await get('products')) || []
     status = HttpStatus.OK
@@ -18,16 +18,18 @@ exports.getAllProducts = async (req, res) => {
 }
 
 exports.addProducts = async (req, res) => {
-  let status
-  const body = {}
+  let count, error
   try {
-    insert('products', req.body)
+    await transaction('products', products => {
+      count = ((products || {}).count || 0) + 1
+      return { ...products, count, [count]: req.body }
+    })
     status = HttpStatus.CREATED
   } catch (err) {
-    body.error = err.message
+    error = err.message
     status = HttpStatus.INTERNAL_SERVER_ERROR
   }
-  return res.status(status).json(body)
+  return res.status(status).json({ id: count, error })
 }
 
 exports.getProduct = async (req, res) => {
