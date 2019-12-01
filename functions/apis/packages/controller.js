@@ -1,14 +1,22 @@
-function getAllPackages(req, res) {
-  // todo, nothing found return empty array
-  return res.status(200).json({
-    success: true,
-    data: {
-      process: 'getAllPackages'
-    }
-  })
+const HttpStatus = require('http-status-codes')
+const { get } = require('../../databaseAccess')
+
+exports.getAllPackages = async (req, res) => {
+  let status
+  const body = {}
+  try {
+    body.data = (await get('packages')) || []
+    body.success = true
+    status = HttpStatus.OK
+  } catch (err) {
+    body.success = false
+    body.status = HttpStatus.INTERNAL_SERVER_ERROR
+    error = err.message
+  }
+  return res.status(status).json(body)
 }
 
-function addPackages(req, res) {
+exports.addPackages = (req, res) => {
   // todo, nothing found return empty array
   return res.status(200).json({
     // 200 or 204 depending if full details or not
@@ -19,7 +27,7 @@ function addPackages(req, res) {
   })
 }
 
-function getPackage(req, res) {
+exports.getPackage = (req, res) => {
   // todo...
   const exists = true
   return res.status(exists ? 200 : 404).json({
@@ -31,7 +39,7 @@ function getPackage(req, res) {
   })
 }
 
-function editPackage(req, res) {
+exports.editPackage = (req, res) => {
   // todo...
   const exists = true
   return res.status(exists ? 200 : 404).json({
@@ -43,7 +51,7 @@ function editPackage(req, res) {
   })
 }
 
-function removePackage(req, res) {
+exports.removePackage = (req, res) => {
   // todo...
   const existed = true
   return res.status(existed ? 204 : 404).json({
@@ -53,12 +61,4 @@ function removePackage(req, res) {
       targetId: req.params.id
     }
   })
-}
-
-module.exports = {
-  getAllPackages,
-  addPackages,
-  getPackage,
-  editPackage,
-  removePackage
 }
