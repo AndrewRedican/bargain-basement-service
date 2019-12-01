@@ -5,20 +5,20 @@
 ### Requirements
 
 - [x] Assume for this exercise that new products can be added but never removed
-- [ ] The API must support the following:
+- [x] The API must support the following:
   - [x] Create a package
-  - Retrieve a package
-  - Update a package
-  - Delete a package
-  - List all packages
+  - [x] Retrieve a package
+  - [x] Update a package
+  - [x] Delete a package
+  - [x] List all packages
 - [ ] I should be able to specify the currency (taking into account the current exchange rate)
 - [ ] API should default to USD if no currency is specified Free API services such as https://exchangeratesapi.io/ offer the ability to query existing exchange rates
 - [ ] A package should have the following attributes:
-  - ID
-  - Name
-  - Description
-  - Products (one or more)
-  - Price (total of product prices)
+  - [x] ID
+  - [x] Name
+  - [x] Description
+  - [ ] Products (one or more)
+  - [ ] Price (total of product prices)
 - [x] The API is protected by basic authentication, user the username user and password pass for access.
 
 Example
