@@ -1,6 +1,8 @@
 const HttpStatus = require('http-status-codes')
-const { get, transaction } = require('../../databaseAccess')
+const { get, transaction, write } = require('../../databaseAccess')
+const { getType, isIterable, sameType } = require('../../core')
 const invalidPackage = require('./invalidPackage')
+const schema = require('./schema')
 
 exports.getAllPackages = async (req, res) => {
   let status, data, error
@@ -63,15 +65,37 @@ exports.getPackage = async (req, res) => {
   return res.status(status).json({ data, error })
 }
 
-exports.editPackage = (req, res) => {
-  // todo...
-  const exists = true
-  return res.status(exists ? 200 : 404).json({
-    data: {
-      process: 'editPackage',
-      targetId: req.params.id
-    }
-  })
+exports.editPackage = async (req, res) => {
+  let data, error
+  try {
+    if (getType(req.body) !== 'object' || !isIterable(req.body))
+      throw new Error(
+        '_syntax:Expected on or more properties to modify from package.'
+      )
+
+    const editKeys = Object.keys(req.body)
+
+    if (editKeys.some(key => !(key in schema)))
+      throw new Error('_syntax:Some properties do not belong to a package.')
+
+    if (editKeys.some(key => !sameType(req.body[key], schema[key])))
+      throw new Error('_syntax:Some properties do not match value type.')
+
+    data = await get(`packages/${req.params.id}`)
+    if (data === null)
+      throw new Error(`Could not find package with id #${req.params.id}`)
+
+    write(`packages/${req.params.id}`, { ...data, ...req.body })
+    status = HttpStatus.NO_CONTENT
+  } catch (err) {
+    error = err.message.replace('_syntax:', '')
+    status = err.message.includes('_syntax:')
+      ? HttpStatus.BAD_REQUEST
+      : err.message.includes('Could not find')
+      ? HttpStatus.NOT_FOUND
+      : HttpStatus.INTERNAL_SERVER_ERROR
+  }
+  return res.status(status).json({ error })
 }
 
 exports.removePackage = (req, res) => {
