@@ -35,6 +35,11 @@ exports.get = async path => {
   return response
 }
 
+exports.transaction = async (path, operation) => {
+  validate.transaction(path)
+  await db.ref(path).transaction(operation)
+}
+
 exports.AtomicUpdate = class {
   constructor(suppressChecks) {
     this.db = db
