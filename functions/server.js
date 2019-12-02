@@ -4,12 +4,12 @@ const app = express()
 const basicAuth = require('express-basic-auth')
 
 app
+  .use(cors())
   .use(
     basicAuth({
       users: { admin: 'supersecret' }
     })
   )
-  .use(cors({ origin: true }))
   .use(express.json())
   .use(express.urlencoded({ extended: false }))
   .use('/products', require('./apis/products/route'))
