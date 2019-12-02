@@ -2,7 +2,7 @@ const schema = {
   name: '',
   description: '',
   price: 0,
-  products: []
+  products: {}
 }
 
 module.exports = schema
