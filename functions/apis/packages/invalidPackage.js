@@ -12,8 +12,8 @@ const invalidPackage = package => {
   else {
     const productsT = getType(package.products)
     if (productsT === 'undefined') return false
-    else if (productsT !== 'array') return true
-    else return package.products.some(invalidProduct)
+    else if (productsT !== 'object') return true
+    else return Object.values(package.products).some(invalidProduct)
   }
 }
 
