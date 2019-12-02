@@ -4,7 +4,7 @@ const app = express()
 const basicAuth = require('express-basic-auth')
 
 app
-  .use(cors())
+  .use(cors({ origin: ['https://bargain-basement.firebaseapp.com'] }))
   .use(
     basicAuth({
       users: { admin: 'supersecret' }
