@@ -39,24 +39,26 @@ Product listings - https://product-service.herokuapp.com/api/v1/products Product
 
 1. Run `firebase serve`
 
-#### API Overview
+### API Overview
 
-- DOCUMENTATINO IS WORK IN PROGRESS
+- DOCUMENTATION WORK IN PROGRESS
 
-##### Security
+#### Security
 
 1. API is protected by Http Basic Authorization (user) and (password).
 2. CORS is enabled. Currently set ONLY to allow frontend-web app project. (See https://andrewredican.github.io/bargain-basement/)
 
-##### Packages
+#### Packages
 
-| Route          | Route     | Methods | Params | Success Code |                                    Success Response                                    | Error Codes |
-| :------------- | :-------- | :------ | :----: | :----------: | :------------------------------------------------------------------------------------: | ----------- |
-| getAllPackages | /packages | GET     |   -    |   200 (OK)   | Always returns a list of packages. If no packages available it returns an empty array. |
-| addPackages    | /packages | POST    |   -    |              |                                                                                        |
-| getPackage     | /packages | GET     |   id   |              |                                                                                        |
-| editPackage    | /packages | PATCH   |   id   |              |                                                                                        |
-| removePackage  | /packages | DELETE  |   id   |              |                                                                                        |
+**Route:** /packages
+
+| Methods | Params | Success Code |         Success Response         | Error Codes |
+| :------ | :----- | :----------: | :------------------------------: | :---------: |
+| GET     | -      |     200      | Empty Array / Array of packages. |     500     |
+| POST    | -      |              |                                  |
+| GET     | id     |              |                                  |
+| PATCH   | id     |              |                                  |
+| DELETE  | id     |              |                                  |
 
 #### Testing
 
