@@ -52,13 +52,13 @@ Product listings - https://product-service.herokuapp.com/api/v1/products Product
 
 **Route:** /packages
 
-| Methods | Params | Success Code |         Success Response         | Error Codes |
-| :------ | :----- | :----------: | :------------------------------: | :---------: |
-| GET     | -      |     200      | Empty Array / Array of packages. |     500     |
-| POST    | -      |              |                                  |
-| GET     | id     |              |                                  |
-| PATCH   | id     |              |                                  |
-| DELETE  | id     |              |                                  |
+| Methods | Params |                   Body                   | Success Code |                     Success                     |   Error Codes   |
+| :------ | :----- | :--------------------------------------: | :----------: | :---------------------------------------------: | :-------------: |
+| GET     | -      |                    -                     |     200      | Responds with empty array or array of packages. |       500       |
+| POST    | -      |            Array of packages             |     201      |               Creates package(s).               |    400 / 500    |
+| GET     | id     |                    -                     |     200      |          Responds with single package.          |    404 / 500    |
+| PATCH   | id     | Any or all valid properties of a package |     204      |                 Updates package                 | 400 / 404 / 500 |
+| DELETE  | id     |                    -                     |     204      |                 Deletes package                 | 404 / 410 / 500 |
 
 #### Testing
 
