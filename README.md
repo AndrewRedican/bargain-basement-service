@@ -41,8 +41,6 @@ Product listings - https://product-service.herokuapp.com/api/v1/products Product
 
 ### API Overview
 
-- DOCUMENTATION WORK IN PROGRESS
-
 #### Security
 
 1. API is protected by Http Basic Authorization (user) and (password).
@@ -55,10 +53,21 @@ Product listings - https://product-service.herokuapp.com/api/v1/products Product
 | Methods | Params |                   Body                   | Success Code |                     Success                     |   Error Codes   |
 | :------ | :----- | :--------------------------------------: | :----------: | :---------------------------------------------: | :-------------: |
 | GET     | -      |                    -                     |     200      | Responds with empty array or array of packages. |       500       |
-| POST    | -      |            Array of packages             |     201      |               Creates package(s).               |    400 / 500    |
+| POST    | -      |     Array of packages (one or more)      |     201      |               Creates package(s).               |    400 / 500    |
 | GET     | id     |                    -                     |     200      |          Responds with single package.          |    404 / 500    |
 | PATCH   | id     | Any or all valid properties of a package |     204      |                 Updates package                 | 400 / 404 / 500 |
 | DELETE  | id     |                    -                     |     204      |                 Deletes package                 | 404 / 410 / 500 |
+
+**Route:** /products
+
+| Methods | Params |                   Body                   | Success Code |                     Success                     |   Error Codes   |
+| :------ | :----- | :--------------------------------------: | :----------: | :---------------------------------------------: | :-------------: |
+| GET     | -      |                    -                     |     200      | Responds with empty array or array of products. |       500       |
+| POST    | -      |     Array of products (one or more)      |     201      |              Creates products(s).               |    400 / 500    |
+| GET     | id     |                    -                     |     200      |          Responds with single product.          |    404 / 500    |
+| PATCH   | id     | Any or all valid properties of a product |     204      |                Updates products.                | 400 / 404 / 500 |
+
+`Any mismatch in path in requests will receive a 404 response back`
 
 #### Testing
 
