@@ -26,27 +26,38 @@ Product listings - https://product-service.herokuapp.com/api/v1/products Product
 
 ### Getting Started
 
-### Project Setup
+#### Project Setup
 
 1. Install Node https://nodejs.org/en/
 2. Run `npm install -g firebase-tools`
 
-### Deploy Cloud Functions
+#### Deploy Cloud Functions
 
 1. Run `firebase deploy --only functions`
 
-### Running Locally
+#### Running Locally
 
 1. Run `firebase serve`
 
-### Testing
+#### API Overview
 
-Work in progress.
+- DOCUMENTATINO IS WORK IN PROGRESS
 
-### Project Standards
+##### Security
 
-Work in progress.
+1. API is protected by Http Basic Authorization (user) and (password).
+2. CORS is enabled. Currently set ONLY to allow frontend-web app project. (See https://andrewredican.github.io/bargain-basement/)
 
-### Development Stategy / Design Decisions
+##### Packages
 
-Work in progress.
+| Route          | Route     | Methods | Params | Success Code |                                    Success Response                                    | Error Codes |
+| :------------- | :-------- | :------ | :----: | :----------: | :------------------------------------------------------------------------------------: | ----------- |
+| getAllPackages | /packages | GET     |   -    |   200 (OK)   | Always returns a list of packages. If no packages available it returns an empty array. |
+| addPackages    | /packages | POST    |   -    |              |                                                                                        |
+| getPackage     | /packages | GET     |   id   |              |                                                                                        |
+| editPackage    | /packages | PATCH   |   id   |              |                                                                                        |
+| removePackage  | /packages | DELETE  |   id   |              |                                                                                        |
+
+#### Testing
+
+Work In Progress.
